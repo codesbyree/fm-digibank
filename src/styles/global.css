@@ -1,1 +1,20 @@
 @import "tailwindcss";
+@import "@fontsource-variable/open-sans/wght.css";
+
+@theme {
+    --font-sans: "Open Sans Variable", sans-serif;
+
+    --color-blue-950: hsl(233, 26%, 24%);
+    --color-green-500: hsl(136, 64%, 51%);
+    --color-cyan-400: hsl(192, 69%, 51%);
+    --color-gray-600: hsl(233, 8%, 62%);
+    --color-gray-100: hsl(220, 16%, 96%);
+    --color-gray-50: hsl(0, 0%, 98%);
+    --color-white: hsl(0, 100%, 100%);
+}
+
+@layer base {
+    body {
+        @apply bg-white font-sans;
+    }
+}

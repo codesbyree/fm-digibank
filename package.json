@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource-variable/open-sans": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.10",
     "clsx": "^2.1.1",

@@ -1,9 +1,167 @@
 ---
+import { Image } from "astro:assets";
+
+import logoImage from "@/assets/images/logo-dark.svg";
+
+import ButtonLink from "./button-link.astro";
 import ContentWidthWrapper from "./content-width-wrapper.astro";
+
+const navMenu = [
+    { href: "#", label: "Home" },
+    { href: "#about", label: "About" },
+    { href: "#contact", label: "Contact" },
+    { href: "#blog", label: "Blog" },
+    { href: "#careers", label: "Careers" },
+];
 ---
 
-<header>
+<header id="header" class="fixed top-0 w-full z-100 bg-white">
     <ContentWidthWrapper>
-        <nav>Navigation</nav>
+        <div data-animate-down class="p-4 flex items-center justify-between">
+            <a href="/">
+                <Image src={logoImage} class="h-5 xl:h-8 w-auto" alt="app logo" />
+            </a>
+
+            <nav data-nav aria-label="Main menu" id="main-navigation" class="absolute w-full top-full left-0 p-5 hidden xl:static xl:block h-[calc(100dvh-100%)] xl:h-auto xl:p-0">
+                <ul id="main-navigation-content" class="bg-white rounded-md relative z-10 p-4 xl:p-0 xl:bg-transparent xl:rounded-none flex flex-col xl:flex-row justify-center">
+                    {
+                        navMenu.map((item) => (
+                            <li>
+                                <a
+                                    href={item.href}
+                                    class="p-3 xl:px-5 block text-center text-blue-950 xl:text-gray-600 text-lg tracking-tight hover:bg-gray-50 bg-white transition-colors xl:hover:bg-transparent xl:hover:text-blue-950 relative group"
+                                >
+                                    {item.label}
+
+                                    <span class="absolute w-full h-1 bg-green-600 -bottom-4 left-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+
+                <span id="main-navigation-backdrop" class="absolute top-0 left-0 w-full bg-linear-to-b from-gray-950/70 via-transparent to-transparent h-full xl:hidden"></span>
+            </nav>
+
+            <button
+                aria-controls="main-navigation"
+                aria-expanded="false"
+                aria-label="Toggle navigation menu"
+                class="w-10 h-10 flex flex-col items-center justify-center gap-1 xl:hidden overflow-hidden"
+                id="main-navigation-controll"
+            >
+                <span class="first w-7 h-0.5 bg-gray-500 block"></span>
+                <span class="second w-7 h-0.5 bg-gray-500 block"></span>
+                <span class="last w-7 h-0.5 bg-gray-500 block"></span>
+            </button>
+
+            <ButtonLink>Request Invite</ButtonLink>
+        </div>
     </ContentWidthWrapper>
 </header>
+
+<script>
+    import { gsap } from "@/lib/gsap";
+
+    function initAnimation() {
+        const header = document.querySelector("#header");
+        if (!header) return;
+
+        const ctx = gsap.context(() => {
+            const mm = gsap.matchMedia();
+
+            gsap.from(header, {
+                yPercent: -100,
+                opacity: 0,
+                filter: "blur(12px)",
+                ease: "back.out(1)",
+            });
+
+            mm.add("(max-width:1152px)", () => {
+                const navigation = header?.querySelector("#main-navigation");
+                const mainNavBtn = header?.querySelector("#main-navigation-controll");
+                const mainNavBackdrop = header?.querySelector("#main-navigation-backdrop");
+
+                let isMenuOpen = false;
+
+                const tl = gsap.timeline({
+                    paused: true,
+                    defaults: {
+                        duration: 0.3,
+                        ease: "back.out(1)",
+                    },
+                    onReverseComplete: () => {
+                        navigation?.classList.add("hidden");
+                    },
+                });
+
+                tl.to(
+                    ".first",
+                    {
+                        rotation: 45,
+                        y: 6,
+                    },
+                    0,
+                )
+                    .to(
+                        ".last",
+                        {
+                            rotation: -45,
+                            y: -6,
+                        },
+                        0,
+                    )
+                    .to(
+                        ".second",
+                        {
+                            x: 20,
+                            opacity: 0,
+                            filter: "blur(10px)",
+                        },
+                        0,
+                    )
+                    .from(
+                        navigation,
+                        {
+                            opacity: 0,
+                        },
+                        0,
+                    )
+                    .from(
+                        "#main-navigation-content",
+                        {
+                            y: 30,
+                            opacity: 0,
+                            filter: "blur(12px)",
+                        },
+                        0.1,
+                    );
+
+                const toggleMenu = () => {
+                    isMenuOpen = !isMenuOpen;
+
+                    if (isMenuOpen) {
+                        tl.play();
+                        mainNavBtn?.setAttribute("data-expanded", "true");
+                        navigation?.classList.remove("hidden");
+                    } else {
+                        mainNavBtn?.setAttribute("data-expanded", "false");
+                        tl.reverse();
+                    }
+                };
+                mainNavBtn?.addEventListener("click", toggleMenu);
+                mainNavBackdrop?.addEventListener("click", toggleMenu);
+
+                return () => {
+                    mainNavBtn?.removeEventListener("click", toggleMenu);
+                    mainNavBackdrop?.removeEventListener("click", toggleMenu);
+                    isMenuOpen = false;
+                };
+            });
+        }, header);
+
+        return ctx;
+    }
+
+    initAnimation();
+</script>

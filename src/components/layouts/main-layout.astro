@@ -1,0 +1,101 @@
+---
+import "@/styles/global.css";
+
+import Navigation from "@/components/ui/navigation.astro";
+
+interface Props {
+    title?: string;
+    description?: string;
+    image?: string;
+    canonicalURL?: string | URL;
+}
+
+const { title = "Digibank", description = "", image = "/images/og-preview.jpg", canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url) } = Astro.props;
+
+const ogImageUrl = new URL(image, Astro.site || Astro.url);
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+
+        <!-- Standard Favicons -->
+        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+
+        <!-- Primary Meta Tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+        <meta name="title" content={title} />
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalURL} />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalURL} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={ogImageUrl} />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={canonicalURL} />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content={ogImageUrl} />
+    </head>
+    <body>
+        <Navigation />
+
+        <div data-smooth-wrapper>
+            <div data-smooth-content>
+                <slot />
+            </div>
+        </div>
+
+        <script>
+            import { ScrollSmoother, ScrollTrigger } from "@/lib/gsap";
+
+            const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+            let smootherInstance: ScrollSmoother;
+            let resizeObserver: ResizeObserver;
+
+            function initSmoothScroll() {
+                if (mediaQuery.matches) return;
+
+                if (smootherInstance) smootherInstance.kill();
+                if (resizeObserver) resizeObserver.disconnect();
+
+                smootherInstance = ScrollSmoother.create({
+                    wrapper: "[data-smooth-wrapper]",
+                    content: "[data-smooth-content]",
+                    smooth: 0.5,
+                    effects: true,
+                });
+
+                const contentElement = document.querySelector("[data-smooth-content]");
+                if (contentElement) {
+                    resizeObserver = new ResizeObserver(() => {
+                        ScrollTrigger.refresh();
+                    });
+                    resizeObserver.observe(contentElement);
+                }
+            }
+
+            initSmoothScroll();
+        </script>
+
+        <style>
+            body,
+            html {
+                margin: 0;
+                padding: 0;
+                overscroll-behavior: none;
+            }
+        </style>
+    </body>
+</html>

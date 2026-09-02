@@ -14,8 +14,8 @@ import ButtonLink from "./button-link.astro";
 
 <footer data-container class="bg-blue-950">
     <ContentWidthWrapper>
-        <div class="p-4 py-15 xl:px-0 flex flex-col gap-10">
-            <div class="flex flex-col items-center gap-8">
+        <div class="p-4 py-15 xl:px-0 flex flex-col gap-10 xl:flex-row xl:items-start xl:gap-28">
+            <div class="flex flex-col items-center gap-8 xl:justify-between xl:gap-20">
                 <Image src={logoImage} alt="Logo" class="w-auto h-5" />
 
                 <ul class="flex gap-4 items-center">
@@ -29,17 +29,19 @@ import ButtonLink from "./button-link.astro";
                 </ul>
             </div>
 
-            <ul class="flex flex-col items-center gap-4">
-                {
-                    ["About Us", "Contact", "Blog", "Careers", "Support", "Privacy Policy"].map((item) => (
-                        <li data-animate-up class="text-gray-100 text-sm">
-                            {item}
-                        </li>
-                    ))
-                }
-            </ul>
+            <div class="xl:flex-1">
+                <ul class="grid grid-cols-1 gap-4 xl:grid-rows-3 xl:grid-flow-col xl:max-w-70 xl:gap-6">
+                    {
+                        ["About Us", "Contact", "Blog", "Careers", "Support", "Privacy Policy"].map((item) => (
+                            <li data-animate-up class="text-gray-100 text-sm hover:text-green-500 transition-colors cursor-pointer xl:text-base">
+                                {item}
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
 
-            <div data-animate-up class="flex flex-col gap-6 items-center">
+            <div data-animate-up class="flex flex-col gap-6 items-center xl:items-end">
                 <ButtonLink>Request Invite</ButtonLink>
                 <span class="text-gray-600 text-sm">© Digitalbank. All Rights Reserved</span>
             </div>

@@ -1,28 +1,29 @@
 ---
 import { Image } from "astro:assets";
 
-import bgIntroMobileImage from "@/assets/images/bg-intro-mobile.svg";
-import bgIntroDesktopImage from "@/assets/images/bg-intro-desktop.svg";
 import mockupsImage from "@/assets/images/image-mockups.png";
 
 import ContentWidthWrapper from "../ui/content-width-wrapper.astro";
 import ButtonLink from "../ui/button-link.astro";
 ---
 
-<section data-container class="bg-gray-50">
+<section
+    data-container
+    class="bg-gray-50 xl:bg-[url('/bg-intro-desktop.svg')] xl:bg-no-repeat xl:bg-position-[center_left_calc((((100vw-1152px)/2)+1152px-42em))] 2xl:bg-position-[center_left_calc((((100vw-1536px)/2)+1536px-42em))] overflow-x-hidden relative"
+>
     <ContentWidthWrapper>
-        <div class="grid grid-cols-1 xl:grid-cols-2 pb-15">
-            <div class="xl:col-start-2 relative w-full bg-[url('/bg-intro-mobile.svg')] bg-cover xl:bg-none px-4 bg-no-repeat bg-position-[center_top_2.7em] overflow-hidden">
-                <div data-speed="1.1">
-                    <div data-animate-left>
-                        <Image src={mockupsImage} class="object-contain w-full max-w-lg mx-auto" alt="" />
+        <div class="grid grid-cols-1 xl:grid-cols-2 pb-15 xl:pb-0 xl:h-dvh xl:max-h-192">
+            <div class="xl:col-start-2 relative w-full bg-[url('/bg-intro-mobile.svg')] bg-cover xl:bg-none px-4 bg-no-repeat bg-position-[center_top_2.7em]">
+                <div data-animate-left class="xl:hidden">
+                    <div data-speed="1.1">
+                        <Image src={mockupsImage} class="w-full max-w-lg mx-auto" alt="" />
                     </div>
                 </div>
             </div>
 
-            <div class="xl:col-start-1 xl:row-start-1 text-center xl:text-left space-y-8 p-4 xl:p-0">
-                <h1 data-split-words class="text-4xl text-blue-950 tracking-tight leading-12">Next generational digital banking</h1>
-                <p data-split-lines class="text-gray-600 text-sm leading-5">
+            <div class="xl:col-start-1 xl:row-start-1 text-center xl:text-left p-5 xl:p-0 flex flex-col gap-8 xl:justify-center xl:pt-21">
+                <h1 data-split-words class="text-4xl text-blue-950 tracking-tight leading-12 xl:text-5xl xl:leading-16 xl:max-w-md">Next generational digital banking</h1>
+                <p data-split-lines class="text-gray-600 text-sm leading-5 xl:text-lg xl:leading-7 xl:max-w-md">
                     Take your financial life online. Your Digitalbank account will be a one-stop-show for spending, saving, budgeting, investing, and much more.
                 </p>
                 <div data-animate-up>

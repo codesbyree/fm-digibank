@@ -43,16 +43,16 @@ export const articlesContents: Article[] = [
 ];
 ---
 
-<section data-container class="bg-gray-50">
+<section data-container class="bg-gray-50" id="blog">
     <ContentWidthWrapper>
-        <div class="px-5 py-15 xl:py-20 xl:px-0 space-y-12 xl:space-y-15">
+        <div class="px-5 py-15 xl:py-25 xl:px-0 space-y-12 xl:space-y-15">
             <h2 data-split-words class="text-blue-950 leading-10 text-3xl tracking-[-0.1px] text-center xl:text-left">Latest Articles</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 xl:grid-cols-4 xl:gap-8 overflow-hidden">
                 {
                     articlesContents.map((article) => (
                         <article data-animate-left class="rounded-sm overflow-hidden shadow-xl shadow-gray-900/2 cursor-pointer group">
-                            <Image src={article.imageCover} alt={article.title + " Image"} class="w-auto h-60 object-cover" />
+                            <Image src={article.imageCover} alt={article.title + " Image"} class="w-full h-60 object-cover" />
 
                             <div class="flex flex-col-reverse gap-4 p-8 bg-white xl:p-4">
                                 <div class="space-y-2">

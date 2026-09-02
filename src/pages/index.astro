@@ -1,4 +1,8 @@
 ---
+import { Image } from "astro:assets";
+
+import mockupsImage from "@/assets/images/image-mockups.png";
+
 import MainLayout from "@/components/layouts/main-layout.astro";
 import HeroSection from "@/components/landing/hero-section.astro";
 import AboutSection from "@/components/landing/about-section.astro";
@@ -6,8 +10,13 @@ import ArticlesSection from "@/components/landing/articles-section.astro";
 ---
 
 <MainLayout>
-    <main>
+    <main class="relative">
         <HeroSection />
+        <div data-container class="absolute top-0 left-0 w-full h-dvh max-h-192 pointer-events-none hidden xl:block">
+            <div data-animate-left>
+                <Image src={mockupsImage} class="h-auto w-200 absolute -top-25 left-[calc((((100vw-1152px)/2)+1152px-32.5em))] 2xl:left-[calc((((100vw-1152px)/2)+1152px-25em))]" alt="" />
+            </div>
+        </div>
         <AboutSection />
         <ArticlesSection />
     </main>

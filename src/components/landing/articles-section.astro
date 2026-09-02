@@ -48,11 +48,11 @@ export const articlesContents: Article[] = [
         <div class="px-4 py-15 space-y-12">
             <h2 data-split-words class="text-blue-950 leading-10 text-3xl tracking-[-0.1px] text-center">Latest Articles</h2>
 
-            <div class="grid grid-cols-1 gap-4 overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-hidden">
                 {
                     articlesContents.map((article) => (
                         <article data-animate-left class="rounded-sm overflow-hidden shadow-xl shadow-gray-900/2">
-                            <Image src={article.imageCover} alt={article.title + " Image"} />
+                            <Image src={article.imageCover} alt={article.title + " Image"} class="w-auto h-60 object-cover" />
 
                             <div class="flex flex-col-reverse gap-4 p-8 bg-white">
                                 <div class="space-y-2">

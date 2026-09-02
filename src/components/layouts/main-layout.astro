@@ -11,12 +11,7 @@ interface Props {
     canonicalURL?: string | URL;
 }
 
-const {
-    title = "Digibank",
-    description = "A digital bank built for ease, for you.",
-    image = "/images/og-preview.jpg",
-    canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url),
-} = Astro.props;
+const { title = "Digitalbank", description = "A digital bank built for ease, for you.", image = "/og-preview.jpg", canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url) } = Astro.props;
 
 const ogImageUrl = new URL(image, Astro.site || Astro.url);
 ---

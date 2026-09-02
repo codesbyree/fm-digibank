@@ -1,10 +1,107 @@
 ---
 import MainLayout from "@/components/layouts/main-layout.astro";
 import HeroSection from "@/components/landing/hero-section.astro";
+import AboutSection from "@/components/landing/about-section.astro";
+import ArticlesSection from "@/components/landing/articles-section.astro";
 ---
 
 <MainLayout>
     <main>
         <HeroSection />
+        <AboutSection />
+        <ArticlesSection />
     </main>
 </MainLayout>
+
+<script>
+    import { gsap, SplitText } from "@/lib/gsap";
+
+    function initAnimation() {
+        const containers = document.querySelectorAll("[data-container]");
+        const contexts: gsap.Context[] = [];
+
+        containers.forEach((container) => {
+            const wordsSplitEl = container.querySelectorAll("[data-split-words]");
+            const linesSplitEl = container.querySelectorAll("[data-split-lines]");
+            const animateUpEl = container.querySelectorAll("[data-animate-up]");
+            const animateLeft = container.querySelectorAll("[data-animate-left]");
+
+            const ctx = gsap.context(() => {
+                const tl = gsap.timeline({
+                    delay: 0.3,
+                    scrollTrigger: {
+                        trigger: container,
+                        start: "top 80%",
+                        toggleActions: "play none none none",
+                    },
+                    defaults: {
+                        duration: 0.5,
+                        ease: "power3.out(1.5)",
+                    },
+                });
+
+                if (wordsSplitEl.length > 0) {
+                    const splitWords = new SplitText(wordsSplitEl, { type: "lines,words", linesClass: "overflow-hidden" });
+
+                    tl.from(splitWords.words, {
+                        y: 10,
+                        opacity: 0,
+                        duration: 0.5,
+                        stagger: 0.1,
+                        filter: "blur(4px)",
+                    });
+                }
+
+                if (linesSplitEl.length > 0) {
+                    const splitLines = new SplitText(linesSplitEl, { type: "lines", linesClass: "overflow-hidden" });
+
+                    tl.from(
+                        splitLines.lines,
+                        {
+                            y: 10,
+                            opacity: 0,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            filter: "blur(4px)",
+                        },
+                        "<0.3",
+                    );
+                }
+
+                if (animateUpEl.length > 0) {
+                    tl.from(
+                        animateUpEl,
+                        {
+                            y: 20,
+                            opacity: 0,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            filter: "blur(4px)",
+                        },
+                        "<0.1",
+                    );
+                }
+
+                if (animateLeft.length > 0) {
+                    tl.from(
+                        animateLeft,
+                        {
+                            x: 40,
+                            opacity: 0,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            filter: "blur(4px)",
+                        },
+                        "<0.1",
+                    );
+                }
+            }, container);
+
+            contexts.push(ctx);
+        });
+
+        return () => contexts.forEach((ctx) => ctx.revert());
+    }
+
+    document.fonts.ready.then(() => initAnimation());
+</script>

@@ -1,3 +1,19 @@
-<a href="#" class="bg-linear-to-tr from-cyan-400 to-green-500 text-nowrap text-gray-50 font-semibold p-3 px-8 rounded-full hover:opacity-70 transition-opacity text-lg">
+---
+import { type HTMLAttributes } from "astro/types";
+
+import { cn } from "@/lib/cn";
+
+interface Props extends HTMLAttributes<"a"> {}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<a
+    href="#"
+    class={cn(
+        "bg-linear-to-tr from-cyan-400 to-green-500 text-nowrap text-gray-50 font-semibold p-3 px-8 rounded-full hover:opacity-70 transition-opacity text-base xl:text-lg inline-block w-max",
+        className,
+    )}
+>
     <slot />
 </a>

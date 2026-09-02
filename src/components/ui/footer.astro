@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+
+import logoImage from "@/assets/images/logo-light.svg";
+import facebookImage from "@/assets/images/icon-facebook.svg";
+import youtubeImage from "@/assets/images/icon-youtube.svg";
+import twitterImage from "@/assets/images/icon-twitter.svg";
+import pinterestImage from "@/assets/images/icon-pinterest.svg";
+import instagramImage from "@/assets/images/icon-instagram.svg";
+
+import ContentWidthWrapper from "./content-width-wrapper.astro";
+import ButtonLink from "./button-link.astro";
+---
+
+<footer data-container class="bg-blue-950">
+    <ContentWidthWrapper>
+        <div class="p-4 py-15 xl:px-0 flex flex-col gap-10">
+            <div class="flex flex-col items-center gap-8">
+                <Image src={logoImage} alt="Logo" class="w-auto h-5" />
+
+                <ul class="flex gap-4 items-center">
+                    {
+                        [facebookImage, youtubeImage, twitterImage, pinterestImage, instagramImage].map((item) => (
+                            <li data-animate-up>
+                                <Image src={item} alt="Social Media" class="w-5 h-5" />
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+
+            <ul class="flex flex-col items-center gap-4">
+                {
+                    ["About Us", "Contact", "Blog", "Careers", "Support", "Privacy Policy"].map((item) => (
+                        <li data-animate-up class="text-gray-100 text-sm">
+                            {item}
+                        </li>
+                    ))
+                }
+            </ul>
+
+            <div data-animate-up class="flex flex-col gap-6 items-center">
+                <ButtonLink>Request Invite</ButtonLink>
+                <span class="text-gray-600 text-sm">© Digitalbank. All Rights Reserved</span>
+            </div>
+        </div>
+    </ContentWidthWrapper>
+</footer>

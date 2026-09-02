@@ -55,7 +55,7 @@ const navMenu = [
                 <span class="last w-7 h-0.5 bg-gray-500 block"></span>
             </button>
 
-            <ButtonLink>Request Invite</ButtonLink>
+            <ButtonLink class="hidden xl:block">Request Invite</ButtonLink>
         </div>
     </ContentWidthWrapper>
 </header>
@@ -74,7 +74,7 @@ const navMenu = [
                 yPercent: -100,
                 opacity: 0,
                 filter: "blur(12px)",
-                ease: "back.out(1)",
+                ease: "power.out(1)",
             });
 
             mm.add("(max-width:1152px)", () => {
@@ -132,6 +132,7 @@ const navMenu = [
                         {
                             y: 30,
                             opacity: 0,
+                            scale: 0.8,
                             filter: "blur(12px)",
                         },
                         0.1,
@@ -144,8 +145,10 @@ const navMenu = [
                         tl.play();
                         mainNavBtn?.setAttribute("data-expanded", "true");
                         navigation?.classList.remove("hidden");
+                        document.body.classList.add("overflow-hidden");
                     } else {
                         mainNavBtn?.setAttribute("data-expanded", "false");
+                        document.body.classList.remove("overflow-hidden");
                         tl.reverse();
                     }
                 };

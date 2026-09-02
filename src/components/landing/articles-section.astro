@@ -1,0 +1,71 @@
+---
+import { Image } from "astro:assets";
+
+import currencyImage from "@/assets/images/image-currency.jpg";
+import restaurantImage from "@/assets/images/image-restaurant.jpg";
+import planeImage from "@/assets/images/image-plane.jpg";
+import confettiImage from "@/assets/images/image-confetti.jpg";
+
+import ContentWidthWrapper from "../ui/content-width-wrapper.astro";
+
+interface Article {
+    title: string;
+    description: string;
+    author: string;
+    imageCover: ImageMetadata;
+}
+
+export const articlesContents: Article[] = [
+    {
+        title: "Receive money in any currency with no fees",
+        description: "The world is getting smaller and we’re becoming more mobile. So why should you be forced to only receive money in a single …",
+        author: "Claire Robinson",
+        imageCover: currencyImage,
+    },
+    {
+        title: "Treat yourself without worrying about money",
+        description: "Our simple budgeting feature allows you to separate out your spending and set realistic limits each month. That means you …",
+        author: "Wilson Hutton",
+        imageCover: restaurantImage,
+    },
+    {
+        title: "Take your Digitalbank card wherever you go",
+        description: "We want you to enjoy your travels. This is why we don’t charge any fees on purchases while you’re abroad. We’ll even show you …",
+        author: "Wilson Hutton",
+        imageCover: planeImage,
+    },
+    {
+        title: "Our invite-only Beta accounts are now live!",
+        description: "After a lot of hard work by the whole team, we’re excited to launch our closed beta. It’s easy to request an invite through the site ...",
+        author: "Claire Robinson",
+        imageCover: confettiImage,
+    },
+];
+---
+
+<section data-container class="bg-gray-50">
+    <ContentWidthWrapper>
+        <div class="px-4 py-15 space-y-12">
+            <h2 data-split-words class="text-blue-950 leading-10 text-3xl tracking-[-0.1px] text-center">Latest Articles</h2>
+
+            <div class="grid grid-cols-1 gap-4 overflow-hidden">
+                {
+                    articlesContents.map((article) => (
+                        <article data-animate-left class="rounded-sm overflow-hidden shadow-xl shadow-gray-900/2">
+                            <Image src={article.imageCover} alt={article.title + " Image"} />
+
+                            <div class="flex flex-col-reverse gap-4 p-8 bg-white">
+                                <div class="space-y-2">
+                                    <h3 class="text-blue-950 text-lg leading-6 tracking-tight">{article.title}</h3>
+                                    <p class="text-sm text-gray-600 leading-5">{article.description}</p>
+                                </div>
+
+                                <p class="text-gray-600 text-xs">By {article.author}</p>
+                            </div>
+                        </article>
+                    ))
+                }
+            </div>
+        </div>
+    </ContentWidthWrapper>
+</section>
